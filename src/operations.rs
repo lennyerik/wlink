@@ -189,6 +189,8 @@ impl WchLink {
         // Clear the halt request bit.
         self.send_command(DmiOp::write(0x10, 0x00000001))?;
 
+        self.clear_abstractcs_cmderr()?;
+
         Ok(())
     }
 
@@ -335,7 +337,6 @@ impl WchLink {
             } else {
                 log::warn!("Reset status clear failed")
             }
-
         }
         // Clear the halt request when the processor is reset and haltedd again
         self.send_command(DmiOp::write(0x10, 0x00000001))?;
